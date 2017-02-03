@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="FMScrub.Controller">
+  <children>
+    <Line endX="496.0" endY="-1.0" layoutX="101.0" layoutY="53.0" startX="-100.0" />
+    <Line endX="-3.0" endY="198.0" layoutX="288.0" layoutY="141.0" startX="-4.0" startY="-89.0" />
+    <Label layoutX="14.0" layoutY="51.0" prefHeight="30.0" prefWidth="107.0" text="Input File">
+      <font>
+        <Font size="20.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label font="$x1" layoutX="300.0" layoutY="57.0" text="Output File" />
+    <TextField fx:id="inputFileField" layoutX="14.0" layoutY="114.0" prefWidth="259.0" />
+    <TextField fx:id="outputLocationField" layoutX="299.0" layoutY="114.0" prefWidth="284.70709228515625" />
+    <Button layoutX="14.0" layoutY="145.0" mnemonicParsing="false" onAction="#chooseInputFile" text="Browse" />
+    <Line endX="496.0" endY="-1.0" layoutX="101.0" layoutY="341.0" startX="-100.0" />
+    <Button layoutX="471.0" layoutY="356.0" mnemonicParsing="false" onAction="#doScrub" prefHeight="30.0" prefWidth="115.0" text="Scrub" />
+    <Label layoutX="299.0" layoutY="93.0" text="Location" />
+    <Label layoutX="299.0" layoutY="184.0" text="Name" />
+    <TextField fx:id="outputNameField" layoutX="300.0" layoutY="206.0" prefWidth="200.0" />
+    <Button layoutX="300.0" layoutY="145.0" mnemonicParsing="false" onAction="#chooseOutputLocation" text="Browse" />
+    <MenuBar layoutX="0.0" layoutY="0.0" prefWidth="600.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#menuHelp" text="Help" />
+            <MenuItem mnemonicParsing="false" onAction="#menuFileExit" text="Close" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+  </children>
+</AnchorPane>
