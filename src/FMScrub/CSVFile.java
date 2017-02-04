@@ -27,6 +27,60 @@ public class CSVFile {
         //New header added is_manual (between total and success, customer_notes (between customer_address_zip and customer_created_at)
         String[] FILE_HEADER_MAPPING1 = {"id", "type", "merchant_id", "user_id", "customer_id", "total", "success", "meta", "pre_auth", "last_four", "created_at", "updated_at", "payment_method", "payment_nickname", "payment_person_name", "payment_card_type", "payment_last_four", "payment_card_exp", "payment_bank_name", "payment_bank_type", "payment_bank_holder_type", "billing_address_1", "billing_address_2", "billing_address_city", "billing_address_state", "billing_address_zip", "customer_firstname", "customer_lastname", "customer_company", "customer_email", "customer_phone", "customer_address_1", "customer_address_2", "customer_address_city", "customer_address_state", "customer_address_zip", "customer_created_at", "customer_updated_at", "customer_deleted_at", "user_name", "system_admin", "user_created_at", "user_updated_at", "user_deleted_at", "total_refunded", "is_voided"};
         String[] FILE_HEADER_MAPPING2 = {"id", "type", "merchant_id", "user_id", "customer_id", "total", "is_manual", "success", "meta", "pre_auth", "last_four", "created_at", "updated_at", "payment_method", "payment_nickname", "payment_person_name", "payment_card_type", "payment_last_four", "payment_card_exp", "payment_bank_name", "payment_bank_type", "payment_bank_holder_type", "billing_address_1", "billing_address_2", "billing_address_city", "billing_address_state", "billing_address_zip", "customer_firstname", "customer_lastname", "customer_company", "customer_email", "customer_phone", "customer_address_1", "customer_address_2", "customer_address_city", "customer_address_state", "customer_address_zip", "customer_notes", "customer_created_at", "customer_updated_at", "customer_deleted_at", "user_name", "system_admin", "user_created_at", "user_updated_at", "user_deleted_at", "total_refunded", "is_voided"};
+        String[] FILE_HEADER_MAPPING3 = {"id",
+                "type",
+                "merchant_id",
+                "user_id",
+                "customer_id",
+                "total",
+                "subtotal",
+                "tax",
+                "is_manual",
+                "success",
+                "memo",
+                "reference",
+                "meta",
+                "pre_auth",
+                "last_four",
+                "created_at",
+                "updated_at",
+                "payment_method",
+                "payment_nickname",
+                "payment_person_name",
+                "payment_card_type",
+                "payment_last_four",
+                "payment_card_exp",
+                "payment_bank_name",
+                "payment_bank_type",
+                "payment_bank_holder_type",
+                "billing_address_1",
+                "billing_address_2",
+                "billing_address_city",
+                "billing_address_state",
+                "billing_address_zip",
+                "customer_firstname",
+                "customer_lastname",
+                "customer_company",
+                "customer_email",
+                "customer_phone",
+                "customer_address_1",
+                "customer_address_2",
+                "customer_address_city",
+                "customer_address_state",
+                "customer_address_zip",
+                "customer_notes",
+                "customer_reference",
+                "customer_created_at",
+                "customer_updated_at",
+                "customer_deleted_at",
+                "user_name",
+                "system_admin",
+                "user_created_at",
+                "user_updated_at",
+                "user_deleted_at",
+                "total_refunded",
+                "is_voided"};
+
         ArrayList<String> csvRecords = new ArrayList<String>();
         ArrayList<CSVRecord> wholeRecords = new ArrayList<CSVRecord>();
 
@@ -36,7 +90,7 @@ public class CSVFile {
             e.printStackTrace();
         }
         //Iterable<CSVRecord> records = null;
-        CSVFormat csvFileFormat = CSVFormat.EXCEL.withHeader(FILE_HEADER_MAPPING2);
+        CSVFormat csvFileFormat = CSVFormat.EXCEL.withHeader(FILE_HEADER_MAPPING3);
         CSVParser records = null;
         try {
             records = new CSVParser(in, csvFileFormat);
