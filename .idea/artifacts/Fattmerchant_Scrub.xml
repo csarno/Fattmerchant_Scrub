@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="javafx" build-on-make="true" name="Fattmerchant Scrub">
-    <output-path>$PROJECT_DIR$/..</output-path>
+    <output-path>$PROJECT_DIR$/out</output-path>
     <properties id="ant-postprocessing">
       <options enabled="true" />
     </properties>
@@ -8,11 +8,11 @@
       <options>
         <option name="appClass" value="FMScrub.Main" />
         <option name="description" value="" />
-        <option name="htmlParamFile" value="" />
+        <option name="htmlPlaceholderId" value="" />
         <option name="nativeBundle" value="exe" />
-        <option name="paramFile" value="" />
         <option name="title" value="Page Street File Scrubber" />
         <option name="vendor" value="" />
+        <option name="version" value="0.1" />
       </options>
     </properties>
     <root id="root" />
