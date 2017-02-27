@@ -1,6 +1,9 @@
 <component name="ArtifactManager">
-  <artifact type="javafx" name="Fattmerchant Scrub">
-    <output-path>$PROJECT_DIR$/out/artifacts/Fattmerchant_Scrub</output-path>
+  <artifact type="javafx" build-on-make="true" name="Fattmerchant Scrub">
+    <output-path>$PROJECT_DIR$/..</output-path>
+    <properties id="ant-postprocessing">
+      <options enabled="true" />
+    </properties>
     <properties id="javafx-properties">
       <options>
         <option name="appClass" value="FMScrub.Main" />
@@ -12,10 +15,6 @@
         <option name="vendor" value="" />
       </options>
     </properties>
-    <root id="root">
-      <element id="archive" name="Fattmerchant_Scrub.jar">
-        <element id="module-output" name="Fattmerchant Scrub" />
-      </element>
-    </root>
+    <root id="root" />
   </artifact>
 </component>
