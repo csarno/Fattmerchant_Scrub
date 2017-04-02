@@ -4,6 +4,7 @@ package FMScrub;
  * Created by csarno on 7/11/16.
  */
 
+import com.sun.deploy.util.ArrayUtil;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
@@ -15,6 +16,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class CSVFile {
+
+    private ArrayList<String> csvRecords = new ArrayList<String>();
+    private ArrayList<CSVRecord> wholeRecords = new ArrayList<CSVRecord>();
+    private ArrayList<CSVRecord> recordsToBeRemoved = new ArrayList<>();
+    private ArrayList<Integer> removeRecords = new ArrayList<>();
 
     public CSVFile(String inputFilePath, String outputFilePath) {
         Reader in = null;
@@ -79,8 +85,6 @@ public class CSVFile {
                 "total_refunded",
                 "is_voided"};
 
-        ArrayList<String> csvRecords = new ArrayList<String>();
-        ArrayList<CSVRecord> wholeRecords = new ArrayList<CSVRecord>();
 
         try {
             in = new FileReader(mInputFile);
@@ -104,7 +108,8 @@ public class CSVFile {
             System.out.printf("id: %s\n", id);
             System.out.printf("company: %s\n", company);
             System.out.printf("total: %s\n", total);
-            System.out.printf("Success? %s\n\n", success);
+            System.out.printf("Success? %s\n", success);
+            System.out.printf("Type: %s\n\n", type);
             if (Objects.equals(success, "1") && Objects.equals(type, "charge")) {
                 csvRecords.add(record.get("customer_company"));
                 wholeRecords.add(record);
@@ -113,16 +118,25 @@ public class CSVFile {
                 csvRecords.add(record.get("customer_company"));
                 wholeRecords.add(record);
             }
+            if (Objects.equals(success, "1") && Objects.equals(type, "void")) {
+                System.out.println("Void found!");
+                markTransactionForRemoval(record);
+            }
         }
 
         System.out.printf("Record: %s\n", records.toString());
         System.out.printf("Number of records: %s\n", csvRecords.size());
+
+        //Remove marked transactions prior to writing output file
+        removeMarkedTransactions();
 
         int counter = 0;
         for (String successRecord : csvRecords) {
             counter++;
             System.out.printf("Successful transaction %d: %s\n", counter, successRecord);
         }
+
+
 
         //String fileName = "res/output.csv";
         //initialize FileWriter object
@@ -143,8 +157,58 @@ public class CSVFile {
             e.printStackTrace();
         }
 
+    }
 
+    private void markTransactionForRemoval(CSVRecord record) {
+        recordsToBeRemoved.add(record);
+        System.out.printf("Marked for removal: %s\n\n", record.get("meta"));
+    }
 
+    private void removeMarkedTransactions() {
+        /*
+        for (CSVRecord record : wholeRecords) {
+            for (CSVRecord markedRecord : recordsToBeRemoved) {
+                String currentCompany = record.get("customer_company");
+                if (markedRecord.get("customer_company").equals(record.get("customer_company")) &&
+                        markedRecord.get("total").equals("-" + record.get("total")) &&
+                        markedRecord.get("meta").equals(record.get("meta")) &&
+                        record.get("type").equals("charge")) {
+                    System.out.printf("Voided transaction: %s\n", currentCompany);
+                    long position = record.getRecordNumber();
+                    wholeRecords.remove(((int) position));
+
+                }
+
+            }
+        } */
+        //System.out.printf("Removed: %b\n", wholeRecords.contains(recordsToBeRemoved));
+        //wholeRecords.removeAll(recordsToBeRemoved);
+        System.out.println("Checking for voided transactions...");
+        int listPos = 0;
+        for (CSVRecord record : wholeRecords) {
+            for (CSVRecord markedRecord : recordsToBeRemoved) {
+                String recordMeta = record.get("meta");
+                String markedMeta = markedRecord.get("meta");
+                String recordTotal = record.get("total");
+                String markedTotal = markedRecord.get("total");
+                String recordCustId = record.get("customer_id");
+                String markedCustId = markedRecord.get("customer_id");
+                System.out.printf("Record meta: %s\nMarked meta: %s\nRecord total: %s, Marked total: %s\n\n", recordMeta, markedMeta, recordTotal, markedTotal);
+                if(recordMeta.equalsIgnoreCase(recordMeta) && recordCustId.equalsIgnoreCase(markedCustId)) {
+                    System.out.printf("Record to be deleted: %s\n", markedRecord.get("customer_company"));
+                    removeRecords.add(listPos);
+                }
+            }
+            listPos++;
+        }
+        System.out.printf("Size before: %d\n", wholeRecords.size());
+        for (Integer i : removeRecords) {
+            System.out.printf("REMOVE: %s\n", i);
+            CSVRecord currRecord = wholeRecords.get(i);
+            System.out.printf("Record being removed: %s\n", currRecord.get("customer_company"));
+            wholeRecords.remove((int)i);
+        }
+        System.out.printf("Size after: %d\n", wholeRecords.size());
     }
 
 }
